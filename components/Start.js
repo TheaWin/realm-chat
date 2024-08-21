@@ -2,9 +2,9 @@ import { useState } from "react";
 import { StyleSheet, View, Text, Alert, TextInput, ImageBackground, TouchableOpacity } from "react-native";
 import { getAuth, signInAnonymously } from "firebase/auth";
 
-const image = require('../assets/Background Image.png')
+const image = require('../assets/Background Image.png');
 
-export default function Start({navigation}) {
+export default function Start({ navigation }) {
   const auth = getAuth();
 
   const [username, setUsername] = useState('');
@@ -21,9 +21,9 @@ export default function Start({navigation}) {
         });
         Alert.alert('Signed in Successfully');
       })
-      .catch((error) => {
+      .catch(() => {
         Alert.alert('Unable to sign in, try again later.');
-      })
+      });
   };
 
   return (
@@ -34,33 +34,33 @@ export default function Start({navigation}) {
         
         {/* container for input, color choice and button */}
         <View style={styles.context}>
-        <TextInput
-          style={styles.textInput}
-          value={username}
-          onChangeText = {setUsername}
-          placeholder='Your Name'
-        />
-        <Text style={styles.colorText}>Choose Background Color:</Text>
-        {/* user selects bg color */}
-        <View style={styles.colorButtonContainer}>
-          {/* Loop through the colors array and create a button for each color */}
-          {colors.map((color, index) => (
-            <TouchableOpacity 
-              key={index}
-              style={[
-                styles.colorButton,{ backgroundColor: color },
-                background === color && styles.selectedColor
-              ]}
-              onPress={() => setBackground(color)}
-            />
-          ))}
-        </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={signInUser}
-        >
-          <Text style={styles.buttonText}>Start Chatting</Text>
-        </TouchableOpacity>
+          <TextInput
+            style={styles.textInput}
+            value={username}
+            onChangeText = {setUsername}
+            placeholder='Your Name'
+          />
+          <Text style={styles.colorText}>Choose Background Color:</Text>
+          {/* user selects bg color */}
+          <View style={styles.colorButtonContainer}>
+            {/* Loop through the colors array and create a button for each color */}
+            {colors.map((color, index) => (
+              <TouchableOpacity 
+                key={index}
+                style={[
+                  styles.colorButton,{ backgroundColor: color },
+                  background === color && styles.selectedColor
+                ]}
+                onPress={() => setBackground(color)}
+              />
+            ))}
+          </View>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={signInUser}
+          >
+            <Text style={styles.buttonText}>Start Chatting</Text>
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
@@ -69,50 +69,49 @@ export default function Start({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'center',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'center'
   },
   image: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
     height: '100%',
+    justifyContent: 'center',
     width: '100%'
   },
   context: {
-    height: '44%',
-    width: '88%',
+    alignItems: 'center',
     backgroundColor: '#fff',
+    height: '44%',
     justifyContent: 'space-around',
     margin: 25,
-    // paddingHorizontal: 20,
-    alignItems: 'center'
+    width: '88%'
   },
   appTitle: {
+    color: '#FFF',
     flex: 1,
     fontSize: 45,
     fontWeight: '600',
-    color: '#FFF',
     margin: 50
   },
   textInput: {
-    width: '88%',
-    padding: 15,
     borderWidth: 1,
-    marginBottom: 15,
+    color: ' #757083',
     fontSize: 16,
     fontWeight: '300',
-    color: ' #757083',
+    marginBottom: 15,
     opacity: 50,
+    padding: 15,
+    width: '88%',
   },
   colorText: {
+    alignSelf: 'flex-start',
+    color: '#757083',
     fontSize: 16,
     fontWeight: '300',
-    color: '#757083',
-    opacity: 100,
-    alignSelf: 'flex-start',
-    marginLeft: '6%'
+    marginLeft: '6%',
+    opacity: 100
 
   },
   colorButtonContainer: {
@@ -145,4 +144,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#FFFFFF',
   }
-})
+});

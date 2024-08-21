@@ -1,14 +1,14 @@
 import { initializeApp } from 'firebase/app';
 import { disableNetwork, enableNetwork, getFirestore } from 'firebase/firestore';
-// import { StyleSheet} from 'react-native';
-import Start from './components/Start';
-import Chat from './components/Chat';
+import { getStorage } from 'firebase/storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { useNetInfo } from '@react-native-community/netinfo';
 import { useEffect } from 'react';
 import { LogBox, Alert } from 'react-native';
+
+import Start from './components/Start';
+import Chat from './components/Chat';
 
 LogBox.ignoreLogs(['AsyncStorage has been extracted from']);
 
@@ -35,11 +35,11 @@ export default function App() {
     appId: "1:278230793866:web:987a2c9a81683fa4aa3773"
   };
 
-  //initialize firebase
   const app = initializeApp(firebaseConfig);
 
-  //Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
+
+  const storage = getStorage(app);
 
   return (
     <NavigationContainer>
@@ -51,17 +51,14 @@ export default function App() {
         <Stack.Screen
           name='Chat'
         >
-          {props => <Chat isConnected={connectionStatus.isConnected} db={db} {...props} />}
+          {props => <Chat 
+            isConnected={connectionStatus.isConnected}
+            db={db}
+            storage={storage}
+            {...props}
+          />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center'
-//   }
-// });
